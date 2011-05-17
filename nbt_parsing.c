@@ -550,6 +550,9 @@ static inline nbt_type list_is_homogenous(const struct tag_list* list)
 {
     nbt_type type = TAG_INVALID;
 
+    size_t len = list_length(&list->entry);
+
+
     const struct list_head* pos;
     list_for_each(pos, &list->entry)
     {
@@ -578,15 +581,16 @@ static nbt_status dump_list_binary(const struct tag_list* list, struct buffer* b
 
     size_t len = list_length(&list->entry);
 
-    if(len == 0) /* empty lists can just be silently ignored */
-        return NBT_OK;
+    if(len == 0) { /* empty lists can just be silently ignored */
+ //       return NBT_OK;
+    }
 
     if(len > 2147483647 /* INT_MAX */)
         return NBT_ERR;
 
-    assert(list_is_homogenous(list) != TAG_INVALID);
-    if((type = list_is_homogenous(list)) == TAG_INVALID)
-        return NBT_ERR;
+//    assert(list_is_homogenous(list) != TAG_INVALID );
+//    if((type = list_is_homogenous(list)) == TAG_INVALID)
+//        return NBT_ERR;
 
     {
         int8_t _type = (int8_t)type;
